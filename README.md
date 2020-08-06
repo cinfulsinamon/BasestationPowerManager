@@ -16,3 +16,4 @@ Run either the .py script or the .exe executable. On first run, a configuration 
 
 ## Notes
 If you edit the script and/or want to compile your own .exe file, make sure to include the BleakUWPBridge.dll file found within your python modules folder.
+Windows likes to give a notification any time a command is sent, so you will either have to disable those or just pair with the device when it asks to stop getting that notification.
