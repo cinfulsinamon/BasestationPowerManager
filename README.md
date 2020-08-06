@@ -8,7 +8,7 @@ Currently built for Windows, the script may function on Linux but the USB part i
   `pip install bleak pywinusb`
   
   If you are running the .exe file, all necessary modules are included.
-  
+3) A bluetooth adapter. It must support BLE, which any Bluetooth 4.0 adapter *should*, but don't quote me on that.
 ## Usage
 Run either the .py script or the .exe executable. On first run, a configuration file will be created, and you will be asked to enter the unique ID of your B channel base station. After entering this, you will be taken to a menu that explains all options. ![Image of BasestaionPowerManager running in console](https://i.imgur.com/rMilQxD.png)
 
