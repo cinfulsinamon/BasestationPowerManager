@@ -11,3 +11,6 @@ Currently built for Windows, the script may function on Linux but the USB part i
   
 ## Usage
 Run either the .py script or the .exe executable. On first run, a configuration file will be created, and you will be asked to enter the unique ID of your B channel base station. After entering this, you will be taken to a menu that explains all options. ![Image of BasestaionPowerManager running in console](https://i.imgur.com/rMilQxD.png)
+
+## Notes
+If you edit the script and/or want to compile your own .exe file, make sure to include the BleakUWPBridge.dll file found within your python modules folder.
