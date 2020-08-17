@@ -3,10 +3,7 @@ import configparser
 import bleak
 import os
 import sys
-import re
 import time
-#import signal
-from functools import partial
 import pywinusb.hid as hid
 
 BS_CMD_BLE_ID = "0000cb01-0000-1000-8000-00805f9b34fb"
