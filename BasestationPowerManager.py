@@ -28,9 +28,6 @@ def make_config():
 def load_configuration():
     config = configparser.ConfigParser()
     config.read('bsinfo.ini')
-    #logging.debug("CONFIG : " + config['BaseStation']['B_MAC_ADDRESS'])
-    #logging.debug("CONFIG : " + config['BaseStation']['B_UNIQUE_ID'])
-    #logging.debug("CONFIG : " + config['HeadSet']['USB_VENDOR_ID'])
     global BS_MAC_ADDRESS, BS_UNIQUE_ID, HS_VENDOR_ID
     BS_MAC_ADDRESS = config['BaseStation']['B_MAC_ADDRESS']
     BS_UNIQUE_ID = config['BaseStation']['B_UNIQUE_ID']
@@ -58,6 +55,7 @@ def get_BS_b():
         scanTries += 1
     if scanTries < 10:
         make_config()
+        print("Basestation information saved.")
     else:
         print("Error finding your base station after 10 attempts. Check your bluetooth device.")
     
@@ -98,6 +96,7 @@ def get_HS_id():
         elif len(tempVID) == 4 and not any(c not in '0123456789ABCDEF' for c in tempVID):
             HS_VENDOR_ID = "0x" + tempVID
             make_config()
+            print("Vendor ID saved.")
             return
         else:
             print("\nInvalid VID. VID should be 4 characters, using only 0-9 or a-f, case-insensitive.")
@@ -147,6 +146,7 @@ def get_selection():
         func = switcher.get(int(selection),0)
         print("")
         func()
+        input("\n\nPress enter to continue...")
     
 def wakeBS():
     print("This will wake your base stations with no timeout.")
@@ -159,6 +159,7 @@ def wakeBS():
             print("Waking up base station...")
             cmd = make_cmd(0x00,0)
             loop.run_until_complete(send_cmd(cmd))
+            print("Basestation awake.")
             return
         elif cont == "n":
             return
@@ -167,7 +168,7 @@ def wakeBS_timeout():
     print("This will wake your base station with an established timeout.")
     print("The script will then loop, pinging the base station before the timeout expires to extend it.")
     print("If you close the script or lose bluetooth connectivity, it will shut off automatically.")
-    print("You may alternatively press any key to exit this loop.")
+    print("You may alternatively press CTRL+C to exit this loop.")
     while True:
         cont = input("Continue? (y/n): ")
         if cont == "y":
@@ -225,13 +226,14 @@ async def send_cmd(cmd):
         try:
             async with bleak.BleakClient(BS_MAC_ADDRESS, loop=loop) as client:
                 await client.write_gatt_char(BS_CMD_BLE_ID, cmd)
+            print("Command recieved.")
             return True
         except:
             print("Error sending command: " + str(sys.exc_info()[0]))
             tries += 1
         if tries == 10:
+            print("Unable to contact base station. Check your bluetooth settings, and ensure your basestation unique ID is correct.")
             return False
-    return True
     
 def ask_auto():
     all_devices = hid.HidDeviceFilter(vendor_id = int(HS_VENDOR_ID,0)).get_devices()
@@ -281,10 +283,12 @@ if __name__ == '__main__':
         else:
             print("No base station info found.")
             get_BS_b()
+            input("\n\nPress enter to continue...")
     else:
         print("No config file found. Generating one.")
         make_config()
         get_BS_b()
+        input("\n\nPress enter to continue...")
     if HS_VENDOR_ID != "0x0000":
         ask_auto()
     while True:
