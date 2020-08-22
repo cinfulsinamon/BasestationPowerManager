@@ -241,6 +241,7 @@ def ask_auto():
         print("No USB device found with saved VID. Check that your headset is plugged in and rerun for auto mode.")
         print("Moving to menu in 5 seconds...")
         time.sleep(5)
+        return
     print("This script can automatically loop and keep your base station powered on until your headset is unplugged.")
     print("It will check for any device connected with the Vendor ID of " + HS_VENDOR_ID + ", so check that only your headset or its sensors are in the below list: \n")
     for device in all_devices:
