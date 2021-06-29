@@ -78,7 +78,7 @@ async def get_BS_list():
             if "HTC BS" in str(bleDevice):
                 devices.append(bleDevice)
     except:
-        print("Exception while scanning BLE devices: " + str(sys.exc_info()[0])) 
+        print("Exception while scanning BLE devices: " + str(sys.exc_info()[0]) + ": " + str(sys.exc_info()[1]) + " " + str(sys.exc_info()[2])) 
     return devices
     
 def get_HS_id():
@@ -229,7 +229,7 @@ async def send_cmd(cmd):
             print("Command recieved.")
             return True
         except:
-            print("Error sending command: " + str(sys.exc_info()[0]))
+            print("Error sending command: " + str(sys.exc_info()[0]) + ": " + str(sys.exc_info()[1]) + " " + str(sys.exc_info()[2]))
             tries += 1
         if tries == 10:
             print("Unable to contact base station. Check your bluetooth settings, and ensure your basestation unique ID is correct.")
